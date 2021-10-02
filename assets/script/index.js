@@ -10,9 +10,11 @@ function handleSearchFormSubmit(event) {
     return;
   }
 
-  var searchPage = 'search-results.html/?q=' + searchInputVal;
+  var searchPage = "search-results.html";
 
+  localStorage.setItem("inputValue", searchInputVal);
   location.assign(searchPage);
 }
 
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
+
