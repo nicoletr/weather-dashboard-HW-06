@@ -1,4 +1,4 @@
-var searchFormEl = document.getElementById("search-form");
+const searchFormEl = document.getElementById("search-form");
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
@@ -10,7 +10,7 @@ function handleSearchFormSubmit(event) {
     return;
   }
 
-  var searchPage = "search-results.html";
+  const searchPage = "search-results.html";
 
   localStorage.setItem("inputValue", searchInputVal);
   location.assign(searchPage);
