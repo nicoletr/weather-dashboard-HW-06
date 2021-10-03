@@ -55,6 +55,11 @@ searchWeather(cityName)
         const cityNameEl = document.createElement("h3");
         cityNameEl.textContent = "Today's forecast for " + cityName;
 
+        const currentIcon = document.createElement("img");
+        currentIcon.className = "current-icon"; 
+        const currentIconImage = weatherData.current.weather[0].icon;
+        currentIcon.setAttribute("src", `https://openweathermap.org/img/wn/${currentIconImage}@2x.png`);
+
         const currentDayList = document.createElement("ul");
         currentDayList.className = "today-details";
         //temp
@@ -84,6 +89,7 @@ searchWeather(cityName)
         currentDayList.appendChild(currentUV);
 
         currentDay.appendChild(cityNameEl);
+        currentDay.appendChild(currentIcon)
         currentDay.appendChild(currentDayList);
     })
 
@@ -100,6 +106,7 @@ searchWeather(cityName)
         forecastContainer.setAttribute("id", i);
         //Create a heading element with forecast day
         const forecastDay = document.createElement("h4");
+        //TODO:Update formatting for day header
         forecastDay.textContent = moment();
 
         //Create a list
@@ -113,23 +120,24 @@ searchWeather(cityName)
     
         //Icon li
         const forecastIcon = document.createElement("img");
-        forecastIcon.className = "forecast-icon";
-        forecastIcon.innerHTML = weatherData.daily[i].weather[0].icon;
+        forecastIcon.className = "forecast-icon"; 
+        const forecastIconImage = weatherData.daily[i].weather[0].icon;
+        forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${forecastIconImage}@2x.png`);
 
         //Wind li
         const forecastWind = document.createElement("li");
         forecastWind.className = "forecast-wind";
-        forecastWind.textContent = "Wind:" + (weatherData.daily[i].wind_speed);
+        forecastWind.textContent = "Wind: " + (weatherData.daily[i].wind_speed);
 
         //Humidity li
         const forecastHumidity = document.createElement("li");
         forecastHumidity.className = "forecast-humidity";
-        forecastHumidity.textContent = "Humidity:" + (weatherData.daily[i].humidity);
+        forecastHumidity.textContent = "Humidity: " + (weatherData.daily[i].humidity) + "%";
 
+        forecastList.appendChild(forecastIcon);
         forecastList.appendChild(forecastTemp);
         forecastList.appendChild(forecastWind);
         forecastList.appendChild(forecastHumidity);
-        forecastList.appendChild(forecastIcon);
 
         forecastContainer.appendChild(forecastList);
         forecastEl.appendChild(forecastContainer);
