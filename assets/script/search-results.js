@@ -51,7 +51,7 @@ searchWeather(cityName)
         //Todays forecast
         //TODO:Convert input text to inital caps
         const cityNameEl = document.createElement("h3");
-        cityNameEl.textContent = "Today's forecast for " + cityName;
+        cityNameEl.textContent = cityName + moment().format(" dddd, MMM Do YYYY");
 
         const currentIcon = document.createElement("img");
         currentIcon.className = "current-icon"; 
@@ -68,7 +68,7 @@ searchWeather(cityName)
         //wind
         const currentWind = document.createElement("li");
         currentWind.className = "today-wind";
-        currentWind.textContent = "Wind Speed: " + weatherData.current.wind_speed;
+        currentWind.textContent = "Wind Speed: " + weatherData.current.wind_speed + " km/s";
 
         //humidity
         const currentHumidity = document.createElement("li");
@@ -78,13 +78,29 @@ searchWeather(cityName)
         //uv index
         const currentUV = document.createElement("li");
         currentUV.className = "today-uv";
-        currentUV.textContent = "UV Index: " + weatherData.current.uvi;
+        const uviValue = document.createElement("span");
+        uviValue.textContent = weatherData.current.uvi;
+        currentUV.textContent = "UV Index: ";
 
+        //uvi colour coding
+        const uviRating = weatherData.current.uvi;
+        if (uviRating < 2){
+            uviValue.classList.add("low-uvi")
+        } else if (uviRating >= 3 && uviRating <= 5){
+            uviValue.classList.add("mod-uvi")
+        } else if (uviRating >= 6 && uviRating <= 7){
+            uviValue.classList.add("high-uvi")
+        } else if (uviRating >= 8 && uviRating <= 10){
+            uviValue.classList.add("very-high-uvi")
+        } else {
+            uviValue.classList.add("extr-high-uvi")
+        }
 
         currentDayList.appendChild(currentTemp);
         currentDayList.appendChild(currentWind);
         currentDayList.appendChild(currentHumidity);
         currentDayList.appendChild(currentUV);
+        currentUV.appendChild(uviValue);
 
         currentDay.appendChild(cityNameEl);
         currentDay.appendChild(currentIcon)
@@ -100,12 +116,15 @@ searchWeather(cityName)
         for(let i = 1; i < 6; i++){
         //Create a card element
         const forecastContainer = document.createElement("div");
-        forecastContainer.className = "forecast";
+        forecastContainer.className = "col-12 col-md col-lg card forecast";
         forecastContainer.setAttribute("id", i);
         //Create a heading element with forecast day
         const forecastDay = document.createElement("h4");
         const forecastTimestamp = weatherData.daily[i].dt;
         forecastDay.textContent = moment(forecastTimestamp, "X").format("dddd");
+
+        const forecastDate = document.createElement("p");
+        forecastDate.textContent = moment(forecastTimestamp, "X").format("MMM Do, YYYY")
 
         //Create a list
         const forecastList = document.createElement("ul");
@@ -125,12 +144,12 @@ searchWeather(cityName)
         //Wind li
         const forecastWind = document.createElement("li");
         forecastWind.className = "forecast-wind";
-        forecastWind.textContent = "Wind: " + (weatherData.daily[i].wind_speed);
+        forecastWind.textContent = "Wind: " + weatherData.daily[i].wind_speed + " km/s";
 
         //Humidity li
         const forecastHumidity = document.createElement("li");
         forecastHumidity.className = "forecast-humidity";
-        forecastHumidity.textContent = "Humidity: " + (weatherData.daily[i].humidity) + "%";
+        forecastHumidity.textContent = "Humidity: " + weatherData.daily[i].humidity + "%";
 
         forecastList.appendChild(forecastIcon);
         forecastList.appendChild(forecastTemp);
@@ -138,6 +157,7 @@ searchWeather(cityName)
         forecastList.appendChild(forecastHumidity);
 
         forecastContainer.appendChild(forecastDay);
+        forecastContainer.appendChild(forecastDate);
         forecastContainer.appendChild(forecastList);
         forecastEl.appendChild(forecastContainer);
 

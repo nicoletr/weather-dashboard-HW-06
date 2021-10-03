@@ -1,9 +1,111 @@
-/* Global styling */
-* {
-font-family: 'Monsterrat', sans-serif;
+:root {
+    --orange: #ec6c4c;
+    --darkgrey: #5f5e60;
+    --mediumgrey: #a1a0a1;
+    --lightgrey: #f3f2f2;
+    --mediumorange: #f0937a;
+    --lightorange: #f3bfaf;
+    --white: white;
 }
 
 /* Removes dots from the lists */
 ul {
     list-style-type: none;
+}
+/* Creates a gradient in the navbar background */
+nav {
+    background-image: linear-gradient(to bottom, var(--orange), var(--mediumorange), var(--lightorange))
+}
+
+nav #header {
+    font-family: 'Spartan', sans-serif;
+    color: var(--white);
+    font-size: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
+
+h1,
+h3,
+h4 {
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: 'Monsterrat', sans-serif;
+    color: var(--darkgrey);
+}
+
+h2 {
+    font-family: 'Monsterrat', sans-serif;
+    font-weight: 200;
+    color: var(--darkgrey);
+}
+
+p {
+    padding-left: 10px;
+    font-family: 'Monsterrat', sans-serif;
+    color: var(--darkgrey);
+}
+
+#search-form {
+    margin: 5px;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.btn-custom {
+    margin-top: 10px;
+    background-color: var(--mediumorange);
+    border-color: var(--mediumorange);
+}
+
+.btn-custom:hover {
+    background-color: var(--lightorange);
+    border-color: var(--lightorange);
+}
+
+.back-custom {
+    color: var(--darkgrey);
+}
+
+.back-custom:hover {
+    color: var(--orange);
+}
+
+.forecast {
+    padding-left: 10px;
+    font-family: 'Monsterrat', sans-serif;
+    color: var(--darkgrey);
+}
+
+.low-uvi {
+    color: green;
+}
+
+.mod-uvi {
+    color: rgb(255, 196, 0);
+}
+
+.high-uvi {
+    color: rgb(255, 102, 0);
+}
+
+.very-high-uvi {
+    color: red;
+}
+
+.extr-high-uvi {
+    color: rgb(128, 0, 64);
+}
+
+#forecast-cards {
+    margin: 5px;
+    padding-left: 10px;
+    font-family: 'Monsterrat', sans-serif;
+    align-content: inline;
+}
+
+ul {
+    padding-left: 15px;
+    color: var(--darkgrey);
 }
