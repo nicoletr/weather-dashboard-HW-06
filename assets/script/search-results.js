@@ -1,6 +1,7 @@
 const APIKey = "b256689a198ad99061a8a459cbcc7fcf";
 
-const currentDay = document.getElementById("today-forecast");
+const currentDay = document.getElementById("today-weather");
+const forecastEl = document.getElementById("forecast-cards");
 const searchFormEl = document.getElementById("search-form");
 const city = document.getElementById("city-search");
 
@@ -45,10 +46,12 @@ function searchWeather(cityName){
 
 searchWeather(cityName)
     .then(function(weatherData){
+        console.log(weatherData);
         //once we have the result
         //we want to show the result inside our dashboard
         //2 parts
         //1. todays forecast
+        //TODO:Convert input text to inital caps
         const cityNameEl = document.createElement("h3");
         cityNameEl.textContent = "Today's forecast for " + cityName;
 
@@ -57,7 +60,7 @@ searchWeather(cityName)
         //temp
         const currentTemp = document.createElement("li");
         currentTemp.className = "today-temp";
-        currentTemp.textContent = "Temp: " + toCelcius(weatherData.current.temp).toFixed(2) + ' C';
+        currentTemp.textContent = "Temp: " + toCelcius(weatherData.current.temp).toFixed(2) + ' °C';
 
         //wind
         const currentWind = document.createElement("li");
@@ -82,22 +85,57 @@ searchWeather(cityName)
 
         currentDay.appendChild(cityNameEl);
         currentDay.appendChild(currentDayList);
+    })
 
-        //2. 5 day forecast
-        //run a loop on the daily array starting from [1]
-        //date
-        // daily[i].dt
-        //temp
-        // toCelcius(daily[1].temp.day)toFixed(2)
-        //icon
-        // daily[i].weather.0.icon
-        //wind
-        // daily[i].wind_speed
-        //humidity
-        // daily[i].humidity
 
-        //5 days forecast
-        //uvi of todays weather
+    //2. 5 day forecast
+    //run a loop on the daily array starting from [1] as index 0 is current day
+    searchWeather(cityName)
+    .then(function(weatherData) {
+        console.log(weatherData);
+        for(let i = 1; i < 6; i++){
+        //Create a card element
+        const forecastContainer = document.createElement("div");
+        forecastContainer.className = "forecast";
+        forecastContainer.setAttribute("id", i);
+        //Create a heading element with forecast day
+        const forecastDay = document.createElement("h4");
+        forecastDay.textContent = moment();
+
+        //Create a list
+        const forecastList = document.createElement("ul");
+        forecastList.className = "forecast-list";
+
+        //Temp li
+        const forecastTemp = document.createElement("li");
+        forecastTemp.className = "forecast-temp";
+        forecastTemp.textContent = "Temp: " + toCelcius(weatherData.daily[i].temp.day).toFixed(2) + " °C";
+    
+        //Icon li
+        const forecastIcon = document.createElement("img");
+        forecastIcon.className = "forecast-icon";
+        forecastIcon.innerHTML = weatherData.daily[i].weather[0].icon;
+
+        //Wind li
+        const forecastWind = document.createElement("li");
+        forecastWind.className = "forecast-wind";
+        forecastWind.textContent = "Wind:" + (weatherData.daily[i].wind_speed);
+
+        //Humidity li
+        const forecastHumidity = document.createElement("li");
+        forecastHumidity.className = "forecast-humidity";
+        forecastHumidity.textContent = "Humidity:" + (weatherData.daily[i].humidity);
+
+        forecastList.appendChild(forecastTemp);
+        forecastList.appendChild(forecastWind);
+        forecastList.appendChild(forecastHumidity);
+        forecastList.appendChild(forecastIcon);
+
+        forecastContainer.appendChild(forecastList);
+        forecastEl.appendChild(forecastContainer);
+
+        }
     })
     ;
 
+//TODO: Add another event listener if user changes city input on this page
