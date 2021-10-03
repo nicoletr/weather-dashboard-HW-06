@@ -4,6 +4,7 @@ const currentDay = document.getElementById("today-weather");
 const forecastEl = document.getElementById("forecast-cards");
 const searchFormEl = document.getElementById("search-form");
 const city = document.getElementById("city-search");
+const searchBtn = document.getElementById("search-btn");
 
 //Gets the search value from local storage
 const cityName = localStorage.getItem("inputValue");
@@ -47,10 +48,7 @@ function searchWeather(cityName){
 searchWeather(cityName)
     .then(function(weatherData){
         console.log(weatherData);
-        //once we have the result
-        //we want to show the result inside our dashboard
-        //2 parts
-        //1. todays forecast
+        //Todays forecast
         //TODO:Convert input text to inital caps
         const cityNameEl = document.createElement("h3");
         cityNameEl.textContent = "Today's forecast for " + cityName;
@@ -94,7 +92,7 @@ searchWeather(cityName)
     })
 
 
-    //2. 5 day forecast
+    //5 day forecast
     //run a loop on the daily array starting from [1] as index 0 is current day
     searchWeather(cityName)
     .then(function(weatherData) {
@@ -106,8 +104,8 @@ searchWeather(cityName)
         forecastContainer.setAttribute("id", i);
         //Create a heading element with forecast day
         const forecastDay = document.createElement("h4");
-        //TODO:Update formatting for day header
-        forecastDay.textContent = moment();
+        const forecastTimestamp = weatherData.daily[i].dt;
+        forecastDay.textContent = moment(forecastTimestamp, "X").format("dddd");
 
         //Create a list
         const forecastList = document.createElement("ul");
@@ -139,6 +137,7 @@ searchWeather(cityName)
         forecastList.appendChild(forecastWind);
         forecastList.appendChild(forecastHumidity);
 
+        forecastContainer.appendChild(forecastDay);
         forecastContainer.appendChild(forecastList);
         forecastEl.appendChild(forecastContainer);
 
@@ -146,4 +145,19 @@ searchWeather(cityName)
     })
     ;
 
-//TODO: Add another event listener if user changes city input on this page
+//TODO: FIX THIS: Event listener function to submit form if user replaces input on search-results page
+function handleSearchFormSubmit(event) {
+    event.preventDefault();
+  
+    var searchInputVal = document.getElementById("city-search").value;
+  
+    if (!searchInputVal) {
+      console.error('Please input a city');
+      return;
+    }
+    localStorage.setItem("inputValue", searchInputVal);
+    searchWeather(cityName);
+}
+  
+searchFormEl.addEventListener('submit', handleSearchFormSubmit);
+searchBtn.addEventListener('click', handleSearchFormSubmit);
