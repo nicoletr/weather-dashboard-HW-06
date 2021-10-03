@@ -165,7 +165,7 @@ searchWeather(cityName)
     })
     ;
 
-//TODO: FIX THIS: Event listener function to submit form if user replaces input on search-results page
+//TODO: NEED TO FIX THIS: Event listener function to submit form if user replaces input on search-results page
 function handleSearchFormSubmit(event) {
     event.preventDefault();
   
@@ -181,3 +181,6 @@ function handleSearchFormSubmit(event) {
   
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
 searchBtn.addEventListener('click', handleSearchFormSubmit);
+
+//TODO: Add function which renders past city searches to page as buttons
+//TODO: Add event listener to the buttons to run search again when they are clicked
